@@ -1,0 +1,102 @@
+@baseUrl = http://localhost:3097
+@tenantId = f63421a5-f5b2-11f0-937d-1a220d8ac2c9
+
+### List all guests (default paging)
+GET {{baseUrl}}/guest
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List guests for a specific estate
+GET {{baseUrl}}/guest?estateId=1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List guests for a specific unit
+GET {{baseUrl}}/guest?unitId=1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List guests invited by a specific host person
+GET {{baseUrl}}/guest?hostPersonId=1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List active guests for an estate
+GET {{baseUrl}}/guest?estateId=1&active=true
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Search guests by name, mobile or email
+GET {{baseUrl}}/guest?estateId=1&search=John&page=1&pageSize=10
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get guest by id
+GET {{baseUrl}}/guest/1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get guest by id (not found)
+GET {{baseUrl}}/guest/9999
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Create guest
+POST {{baseUrl}}/guest
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "estate_id": 1,
+  "unit_id": 1,
+  "host_person_id": 1,
+  "guest_name": "John Doe",
+  "mobile": "+27831234567",
+  "email": "john.doe@example.com",
+  "valid_from": "2025-07-01T08:00:00",
+  "valid_to": "2025-07-01T18:00:00",
+  "notes": "Day visitor"
+}
+
+### Create guest (missing required fields - should fail)
+POST {{baseUrl}}/guest
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "estate_id": 1,
+  "guest_name": "Missing required unit and host"
+}
+
+### Update guest (extend validity period)
+PUT {{baseUrl}}/guest/1
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "valid_to": "2025-07-02T18:00:00",
+  "notes": "Extended visit"
+}
+
+### Deactivate guest
+PATCH {{baseUrl}}/guest/1/deactivate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reason": "Guest cancelled visit"
+}
+
+### Activate guest
+PATCH {{baseUrl}}/guest/1/activate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reason": "Guest visit rescheduled"
+}

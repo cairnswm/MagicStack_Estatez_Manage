@@ -1,0 +1,86 @@
+@baseUrl = http://localhost:3097
+@tenantId = f63421a5-f5b2-11f0-937d-1a220d8ac2c9
+
+### List all units (default paging)
+GET {{baseUrl}}/unit
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List units for a specific estate
+GET {{baseUrl}}/unit?estateId=1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List active units for an estate
+GET {{baseUrl}}/unit?estateId=1&active=true
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Search units by unit number or display name
+GET {{baseUrl}}/unit?estateId=1&search=101&page=1&pageSize=10
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get unit by id
+GET {{baseUrl}}/unit/1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get unit by id (not found)
+GET {{baseUrl}}/unit/9999
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Create unit
+POST {{baseUrl}}/unit
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "estate_id": 1,
+  "unit_number": "101",
+  "display_name": "Unit 101",
+  "street_address": "1 Oak Avenue, Unit 101"
+}
+
+### Create unit (missing required fields - should fail)
+POST {{baseUrl}}/unit
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "display_name": "Missing estate_id and unit_number"
+}
+
+### Update unit
+PUT {{baseUrl}}/unit/1
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "display_name": "Unit 101 (Corner Unit)",
+  "street_address": "1 Oak Avenue, Unit 101"
+}
+
+### Deactivate unit
+PATCH {{baseUrl}}/unit/1/deactivate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reason": "Unit under renovation"
+}
+
+### Activate unit
+PATCH {{baseUrl}}/unit/1/activate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reason": "Renovation complete"
+}

@@ -1,0 +1,82 @@
+@baseUrl = http://localhost:3097
+@tenantId = f63421a5-f5b2-11f0-937d-1a220d8ac2c9
+
+### List all settings (all estates)
+GET {{baseUrl}}/setting
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List settings for a specific estate
+GET {{baseUrl}}/setting?estateId=1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Search settings by key
+GET {{baseUrl}}/setting?estateId=1&search=vehicle
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get setting by id
+GET {{baseUrl}}/setting/1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get setting by id (not found)
+GET {{baseUrl}}/setting/9999
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Create setting
+POST {{baseUrl}}/setting
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "estate_id": 1,
+  "setting_key": "allow_unknown_vehicles",
+  "setting_value": "true"
+}
+
+### Create setting (missing required fields - should fail)
+POST {{baseUrl}}/setting
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "setting_value": "missing estate_id and setting_key"
+}
+
+### Update setting by id
+PUT {{baseUrl}}/setting/1
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "setting_value": "false",
+  "reason": "Policy change - unknown vehicles not allowed"
+}
+
+### Upsert setting by estate and key (creates or updates)
+PUT {{baseUrl}}/setting/estate/1/key/allow_unknown_vehicles
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "setting_value": "true",
+  "reason": "Policy restored"
+}
+
+### Upsert a new setting by estate and key
+PUT {{baseUrl}}/setting/estate/1/key/guest_qr_self_service
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "setting_value": "true",
+  "reason": "Enabling guest self-service QR codes"
+}

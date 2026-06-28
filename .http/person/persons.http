@@ -1,0 +1,89 @@
+@baseUrl = http://localhost:3097
+@tenantId = f63421a5-f5b2-11f0-937d-1a220d8ac2c9
+
+### List all persons (default paging)
+GET {{baseUrl}}/person
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List persons for a specific estate
+GET {{baseUrl}}/person?estateId=1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List active persons for an estate
+GET {{baseUrl}}/person?estateId=1&active=true
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Search persons by name, email or mobile
+GET {{baseUrl}}/person?estateId=1&search=Smith&page=1&pageSize=10
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get person by id
+GET {{baseUrl}}/person/1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get person by id (not found)
+GET {{baseUrl}}/person/9999
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Create person
+POST {{baseUrl}}/person
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "estate_id": 1,
+  "first_name": "Jane",
+  "last_name": "Smith",
+  "preferred_name": "Jane",
+  "email": "jane.smith@example.com",
+  "mobile": "+27821234567",
+  "id_number": "9001010001088"
+}
+
+### Create person (missing required fields - should fail)
+POST {{baseUrl}}/person
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "missing.name@example.com"
+}
+
+### Update person
+PUT {{baseUrl}}/person/1
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "mobile": "+27829876543",
+  "notes": "Updated contact details"
+}
+
+### Deactivate person
+PATCH {{baseUrl}}/person/1/deactivate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reason": "Person moved out of estate"
+}
+
+### Activate person
+PATCH {{baseUrl}}/person/1/activate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reason": "Person moved back into estate"
+}

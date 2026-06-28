@@ -1,0 +1,86 @@
+@baseUrl = http://localhost:3097
+@tenantId = f63421a5-f5b2-11f0-937d-1a220d8ac2c9
+
+### List all person-vehicle associations (default paging)
+GET {{baseUrl}}/person-vehicle
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List person-vehicle associations for a specific person
+GET {{baseUrl}}/person-vehicle?personId=1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List person-vehicle associations for a specific vehicle
+GET {{baseUrl}}/person-vehicle?vehicleId=1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List active person-vehicle associations for a person
+GET {{baseUrl}}/person-vehicle?personId=1&active=true
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get person-vehicle association by id
+GET {{baseUrl}}/person-vehicle/1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get person-vehicle association by id (not found)
+GET {{baseUrl}}/person-vehicle/9999
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Create person-vehicle association
+POST {{baseUrl}}/person-vehicle
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "person_id": 1,
+  "vehicle_id": 1,
+  "primary_vehicle": true,
+  "start_date": "2024-01-01"
+}
+
+### Create person-vehicle association (missing required fields - should fail)
+POST {{baseUrl}}/person-vehicle
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "person_id": 1
+}
+
+### Update person-vehicle association
+PUT {{baseUrl}}/person-vehicle/1
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "primary_vehicle": false,
+  "end_date": "2025-12-31"
+}
+
+### Deactivate person-vehicle association
+PATCH {{baseUrl}}/person-vehicle/1/deactivate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reason": "Vehicle no longer owned by person"
+}
+
+### Activate person-vehicle association
+PATCH {{baseUrl}}/person-vehicle/1/activate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reason": "Vehicle ownership re-confirmed"
+}
