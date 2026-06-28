@@ -1,0 +1,40 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Load .env from MagicStack (silent)
+        run: |
+          set -o pipefail
+          # Download the .env file silently to a temp file (don't print contents)
+          curl -fsS -H "X-API-KEY: ${{ secrets.API_KEY }}" \
+            https://secrets.magicrunez.com/secrets/repos/actions-variables \
+            -o .env.tmp
+          # Move into place 
+          mv .env.tmp .env
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to server
+        run: npm run deploy

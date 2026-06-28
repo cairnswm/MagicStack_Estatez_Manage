@@ -1,0 +1,36 @@
+@baseUrl = http://localhost:3097
+@tenantId = f63421a5-f5b2-11f0-937d-1a220d8ac2c9
+
+### Create payment / order
+POST {{baseUrl}}/payment
+Content-Type: application/json
+X-Tenant-ID: {{tenantId}}
+
+{
+  "orderId": "TEST-ORDER-1001",
+  "amount": 1999,
+  "currency": "ZAR",
+  "customer": { "name": "Alice", "email": "alice@example.com" }
+}
+
+### Payment webhook
+POST {{baseUrl}}/payment/webhook
+Content-Type: application/json
+
+{
+  "event": "payment.succeeded",
+  "payment": {
+    "id": 123,
+    "externalId": "ORDER-1001",
+    "tenantId": "{{tenantId}}",
+    "status": "succeeded",
+    "amount": 1999,
+    "currency": "ZAR",
+    "checkoutId": "checkout_abc"
+  },
+  "original": {
+    "id": "evt_abc123",
+    "type": "payment.succeeded",
+    "status": "succeeded"
+  }
+}

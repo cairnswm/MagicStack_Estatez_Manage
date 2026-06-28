@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
+  <!-- Top-left chevron -->
+  <path
+    d="M11.354 1.646L5.707 8l5.647 5.646"
+    fill="none"
+    stroke="orange"
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    transform="translate(-2,0) scale(0.8)"
+  />
+
+  <!-- Bottom-right chevron -->
+  <path
+    d="M4.646 1.646L10.293 8l-5.647 5.646"
+    fill="none"
+    stroke="orange"
+    stroke-width="3"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    transform="translate(4.5,3.5) scale(0.8)"
+  />
+</svg>
