@@ -1,0 +1,37 @@
+@baseUrl = http://localhost:3097
+@tenantId = f63421a5-f5b2-11f0-937d-1a220d8ac2c9
+
+### Get all audit events (default paging)
+GET {{baseUrl}}/audit/events
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get audit events filtered by estateId
+GET {{baseUrl}}/audit/events?estateId=1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get audit events filtered by severity (SECURITY)
+GET {{baseUrl}}/audit/events?severity=SECURITY
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get audit events filtered by eventType
+GET {{baseUrl}}/audit/events?eventType=USER_LOGIN
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get audit events filtered by date range
+GET {{baseUrl}}/audit/events?fromDate=2025-01-01&toDate=2025-12-31
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get audit events with custom paging
+GET {{baseUrl}}/audit/events?page=2&pageSize=10
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get audit events with multiple filters
+GET {{baseUrl}}/audit/events?estateId=1&severity=WARNING&page=1&pageSize=5
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
