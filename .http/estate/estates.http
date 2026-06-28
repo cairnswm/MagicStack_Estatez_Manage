@@ -1,0 +1,87 @@
+@baseUrl = http://localhost:3097
+@tenantId = f63421a5-f5b2-11f0-937d-1a220d8ac2c9
+
+### List all estates (default paging)
+GET {{baseUrl}}/estate
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List active estates
+GET {{baseUrl}}/estate?active=true
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Search estates by name
+GET {{baseUrl}}/estate?search=Oakwood&page=1&pageSize=10
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get estate by id
+GET {{baseUrl}}/estate/1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get estate by id (not found)
+GET {{baseUrl}}/estate/9999
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Create estate
+POST {{baseUrl}}/estate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Oakwood Estate",
+  "code": "OAKWOOD",
+  "description": "A beautiful residential estate",
+  "timezone": "Africa/Johannesburg",
+  "address_line_1": "1 Oak Avenue",
+  "suburb": "Sandton",
+  "city": "Johannesburg",
+  "province": "Gauteng",
+  "postal_code": "2196",
+  "country": "South Africa"
+}
+
+### Create estate (missing required fields - should fail)
+POST {{baseUrl}}/estate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "description": "Missing name and code"
+}
+
+### Update estate
+PUT {{baseUrl}}/estate/1
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "description": "Updated description for Oakwood Estate",
+  "city": "Sandton"
+}
+
+### Deactivate estate
+PATCH {{baseUrl}}/estate/1/deactivate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reason": "Estate no longer operational"
+}
+
+### Activate estate
+PATCH {{baseUrl}}/estate/1/activate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reason": "Estate reactivated"
+}

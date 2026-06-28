@@ -1,0 +1,87 @@
+@baseUrl = http://localhost:3097
+@tenantId = f63421a5-f5b2-11f0-937d-1a220d8ac2c9
+
+### List all unit-person associations (default paging)
+GET {{baseUrl}}/unit-person
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List unit-person associations for a specific unit
+GET {{baseUrl}}/unit-person?unitId=1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List unit-person associations for a specific person
+GET {{baseUrl}}/unit-person?personId=1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List active unit-person associations for a unit
+GET {{baseUrl}}/unit-person?unitId=1&active=true
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get unit-person association by id
+GET {{baseUrl}}/unit-person/1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get unit-person association by id (not found)
+GET {{baseUrl}}/unit-person/9999
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Create unit-person association
+POST {{baseUrl}}/unit-person
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "unit_id": 1,
+  "person_id": 1,
+  "person_type_id": 1,
+  "start_date": "2024-01-01",
+  "primary_contact": true
+}
+
+### Create unit-person association (missing required fields - should fail)
+POST {{baseUrl}}/unit-person
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "unit_id": 1
+}
+
+### Update unit-person association (change person type or dates)
+PUT {{baseUrl}}/unit-person/1
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "end_date": "2025-12-31",
+  "primary_contact": false
+}
+
+### Deactivate unit-person association
+PATCH {{baseUrl}}/unit-person/1/deactivate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reason": "Person no longer resides at this unit"
+}
+
+### Activate unit-person association
+PATCH {{baseUrl}}/unit-person/1/activate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reason": "Person returned to unit"
+}

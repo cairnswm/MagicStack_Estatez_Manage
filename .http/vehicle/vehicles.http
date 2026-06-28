@@ -1,0 +1,88 @@
+@baseUrl = http://localhost:3097
+@tenantId = f63421a5-f5b2-11f0-937d-1a220d8ac2c9
+
+### List all vehicles (default paging)
+GET {{baseUrl}}/vehicle
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List vehicles for a specific estate
+GET {{baseUrl}}/vehicle?estateId=1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List active vehicles for an estate
+GET {{baseUrl}}/vehicle?estateId=1&active=true
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Search vehicles by registration, make, model or colour
+GET {{baseUrl}}/vehicle?estateId=1&search=ABC&page=1&pageSize=10
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get vehicle by id
+GET {{baseUrl}}/vehicle/1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get vehicle by id (not found)
+GET {{baseUrl}}/vehicle/9999
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Create vehicle
+POST {{baseUrl}}/vehicle
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "estate_id": 1,
+  "registration_number": "ABC 123 GP",
+  "make": "Toyota",
+  "model": "Corolla",
+  "colour": "White",
+  "description": "White Toyota Corolla"
+}
+
+### Create vehicle (missing required fields - should fail)
+POST {{baseUrl}}/vehicle
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "estate_id": 1
+}
+
+### Update vehicle
+PUT {{baseUrl}}/vehicle/1
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "colour": "Silver",
+  "description": "Silver Toyota Corolla - updated"
+}
+
+### Deactivate vehicle
+PATCH {{baseUrl}}/vehicle/1/deactivate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reason": "Vehicle sold"
+}
+
+### Activate vehicle
+PATCH {{baseUrl}}/vehicle/1/activate
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reason": "Vehicle re-registered"
+}

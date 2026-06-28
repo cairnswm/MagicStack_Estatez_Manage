@@ -1,0 +1,71 @@
+@baseUrl = http://localhost:3097
+@tenantId = f63421a5-f5b2-11f0-937d-1a220d8ac2c9
+
+### List all person types (default paging)
+GET {{baseUrl}}/person-type
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### List person types for a specific estate (includes global system types)
+GET {{baseUrl}}/person-type?estateId=1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Search person types by code or description
+GET {{baseUrl}}/person-type?search=OWNER&page=1&pageSize=10
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get person type by id
+GET {{baseUrl}}/person-type/1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get person type by id (not found)
+GET {{baseUrl}}/person-type/9999
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Create custom person type
+POST {{baseUrl}}/person-type
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "estate_id": 1,
+  "code": "CARETAKER",
+  "description": "Property Caretaker"
+}
+
+### Create system-level person type (no estate_id)
+POST {{baseUrl}}/person-type
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "code": "CONTRACTOR",
+  "description": "External Contractor",
+  "system_type": false
+}
+
+### Create person type (missing required fields - should fail)
+POST {{baseUrl}}/person-type
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "estate_id": 1
+}
+
+### Update person type
+PUT {{baseUrl}}/person-type/1
+X-Tenant-ID: {{tenantId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "description": "Updated description for this person type"
+}
