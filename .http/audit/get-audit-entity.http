@@ -1,0 +1,22 @@
+@baseUrl = http://localhost:3097
+@tenantId = f63421a5-f5b2-11f0-937d-1a220d8ac2c9
+
+### Get audit change history for an estate_estate entity record
+GET {{baseUrl}}/audit/estate_estate/1
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get audit change history for an estate_unit entity record
+GET {{baseUrl}}/audit/estate_unit/42
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get audit change history for an estate_person entity record
+GET {{baseUrl}}/audit/estate_person/7
+X-Tenant-ID: {{tenantId}}
+Accept: application/json
+
+### Get audit change history for an entity with no history (returns empty array)
+GET {{baseUrl}}/audit/estate_vehicle/999
+X-Tenant-ID: {{tenantId}}
+Accept: application/json

@@ -7,6 +7,7 @@ import tenantMiddleware from './middleware/tenantMiddleware';
 import tenantRouter from './routes/tenant';
 import sampleRouter from './routes/sample';
 import paymentRouter from './routes/payment';
+import auditRouter from './routes/audit';
 import docsRouter from './routes/docs';
 
 const app = express();
@@ -64,6 +65,7 @@ app.use(`${BASE_PATH}/db`, dbRouter);
 app.use(`${BASE_PATH}/tenant`, tenantRouter);
 app.use(`${BASE_PATH}/sample`, sampleRouter);
 app.use(`${BASE_PATH}/payment`, paymentRouter);
+app.use(`${BASE_PATH}/audit`, auditRouter);
 
 app.use(BASE_PATH || '/', docsRouter);
 app.use(`${BASE_PATH}/docs`, docsRouter);
